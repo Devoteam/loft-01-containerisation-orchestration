@@ -15,6 +15,7 @@ ArgoCD CLI
 
 ```bash
 ❯ cd terraform/
+❯ tf init
 ❯ tf apply
 ❯ cd ../.
 ```
@@ -58,7 +59,6 @@ ip-10-0-3-169.eu-central-1.compute.internal   Ready    <none>   23m   v1.21.5-ek
 ## Verify
 ```bash
 ❯ eksctl get iamserviceaccount --cluster $AWS_EKS_CLUSTER_NAME --name aws-load-balancer-controller --namespace kube-system
-❯ export AWS_EKS_CLUSTER_VPC_ID=`aws ec2 describe-vpcs --filters Name=tag:Name,Values=${AWS_EKS_CLUSTER_NAME} --query "Vpcs[].VpcId" --output "text"`
 # Status can be checked here:
 # https://eu-central-1.console.aws.amazon.com/cloudformation/home?region=eu-central-1#
 ```
@@ -66,6 +66,7 @@ ip-10-0-3-169.eu-central-1.compute.internal   Ready    <none>   23m   v1.21.5-ek
 # Install Ingress
 
 ```bash
+❯ export AWS_EKS_CLUSTER_VPC_ID=`aws ec2 describe-vpcs --filters Name=tag:Name,Values=${AWS_EKS_CLUSTER_NAME} --query "Vpcs[].VpcId" --output "text"`
 ❯ helm repo add eks https://aws.github.io/eks-charts
 ❯ helm install aws-load-balancer-controller eks/aws-load-balancer-controller \
   --set clusterName=$AWS_EKS_CLUSTER_NAME \
@@ -74,6 +75,12 @@ ip-10-0-3-169.eu-central-1.compute.internal   Ready    <none>   23m   v1.21.5-ek
   --set region=eu-central-1 \
   --set vpcId=$AWS_EKS_CLUSTER_VPC_ID \
   -n kube-system
+```
+
+## Verify
+
+```bash
+❯ kubectl get all -n kube-system -l "app.kubernetes.io/instance=aws-load-balancer-controller"
 ```
 
 # ArgoCD
@@ -99,6 +106,7 @@ argocd-applicationset-controller-66689cbf4b-jp662   0/1     ContainerCreating   
 
 ## Login to ArgoCD
 ```bash
+# Username: 'admin'
 # Get the login password (Save to clipboard)
 ❯ kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d; echo
 ❯ kubectl -n argocd port-forward service/argocd-server 8080:443
@@ -110,7 +118,7 @@ argocd-applicationset-controller-66689cbf4b-jp662   0/1     ContainerCreating   
 
 ```bash
 ❯ argocd login localhost:8080 # username: admin & password from above
-❯ argocd repo add https://github.com/Devoteam/loft-01-containersiation-orchestration
+❯ argocd repo add https://github.com/Devoteam/loft-01-containerisation-orchestration
 ```
 
 ## ArgoCD WebUI install Game Example
@@ -127,7 +135,7 @@ spec:
     server: "https://kubernetes.default.svc"
   source:
     path: game-2048
-    repoURL: "https://github.com/Devoteam/loft-01-containersiation-orchestration"
+    repoURL: "https://github.com/Devoteam/loft-01-containerisation-orchestration"
     targetRevision: HEAD
   project: default
   syncPolicy:
@@ -140,7 +148,7 @@ spec:
 ```bash
 kubectl get pods -n game-2048 -o wide
 # or
-kubectl get pods --all-namespaces
+kubectl get pods --all-namespaces -o wide
 ```
 
 ## Verify Ingress is working
@@ -155,7 +163,7 @@ ingress-2048   <none>   *       k8s-game2048-XXXX.eu-central-1.elb.amazonaws.com
 ## ArgoCD
 ```bash
 ❯ argocd app delete game-2048
-❯ argocd repo rm https://github.com/Devoteam/loft-01-containersiation-orchestration
+❯ argocd repo rm https://github.com/Devoteam/loft-01-containerisation-orchestration
 ```
 
 ## EKSCTL
