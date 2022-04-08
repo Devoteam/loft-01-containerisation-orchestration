@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: game-2048
+spec:
+  destination:
+    name: ""
+    namespace: game-2048
+    server: "https://kubernetes.default.svc"
+  source:
+    path: game-2048
+    repoURL: "https://github.com/ArgonQQ/argocdtest"
+    targetRevision: HEAD
+  project: default
+  syncPolicy:
+    automated:
+      prune: false
+      selfHeal: false
