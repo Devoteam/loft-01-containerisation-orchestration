@@ -1,6 +1,6 @@
 # Hands On Talk
 ![https://player.vimeo.com/video/701185570?h=f0e66bd346](https://i.vimeocdn.com/video/1417127806-344ffd6a05c6256a3056326b075ef0934d0a4568c2a8d28da782ecb9a1f80f31-d?mw=1800&mh=1013)
-*Recording of the Session of our Devoteam A Cloud Loft* 👉 🇬🇧 **English** ([Vimeo](https://player.vimeo.com/video/701185570?h=f0e66bd346) | [Youtube](https://youtu.be/Jn9eAYUNUcI))/ 🇩🇪 **German** ([Vimeo](https://player.vimeo.com/video/701182812?h=5c08e5c4db) | [YouTube](https://youtu.be/TY8IIElGXI4))👈
+*Recording of the Session of our Devoteam A Cloud Loft* 👉 🇬🇧 **English** ([Vimeo](https://player.vimeo.com/video/701185570?h=f0e66bd346) | [Youtube](https://youtu.be/FIfOq2yd1qE)) / 🇩🇪 **German** ([Vimeo](https://player.vimeo.com/video/701182812?h=5c08e5c4db) | [YouTube](https://youtu.be/ElnBoM6U3wk))👈
 # Architecture
 
 ![Architecture Overview](files/Loft_04_2022_Containerisation_Orchestration.png "Overview")
